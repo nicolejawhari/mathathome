@@ -527,7 +527,8 @@
 
         const MAX_RETRIES = 5;
         const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
 
         async function fetchWithExponentialBackoff(fetcher, maxRetries = 5) {
             for (let i = 0; i < maxRetries; i++) {
@@ -571,7 +572,10 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    // Log error details for better debugging in the published environment
+                    const errorText = await response.text();
+                    console.error(`API Error Status: ${response.status}`, errorText);
+                    throw new Error(`API call failed with status ${response.status}. Check console for details.`);
                 }
                 return response.json();
             };
@@ -587,7 +591,9 @@
                 routineOutput.innerHTML = formattedText;
 
             } catch (error) {
-                routineOutput.innerHTML = `<p class="text-red-600">Error generating ideas. Please check your network connection or try again later.</p>`;
+                // Display a generic error but point the user to the console for specific details
+                console.error("Routine generation failed:", error);
+                routineOutput.innerHTML = `<p class="text-red-600">Error generating ideas. The service failed. Please check the browser console for specific API error messages.</p>`;
             } finally {
                 generateButton.disabled = false;
                 loadingIndicator.classList.add('hidden');
