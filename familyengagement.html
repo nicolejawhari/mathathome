@@ -17,18 +17,18 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #F7FFF7; /* Off-white background */
-            color: #1A535C; /* Dark Teal Text */
+            background-color: #F7FFF7;
+            color: #1A535C;
         }
 
         /* Chart Container Styling - Mandatory Requirements */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px; /* Constraint for large screens */
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 300px; /* Base height */
+            height: 300px;
             max-height: 400px;
             background: #ffffff;
             border-radius: 0.5rem;
@@ -50,7 +50,7 @@
         
         .text-coral { color: #FF6B6B; }
         .text-turquoise { color: #4ECDC4; }
-        .text-yellow { color: #F5D300; /* Slightly darker for text legibility */ }
+        .text-yellow { color: #F5D300; }
         .text-dark-teal { color: #1A535C; }
 
         /* Custom Scrollbar */
@@ -67,6 +67,17 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #1A535C;
         }
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+            visibility: hidden;
+            opacity: 0;
+        }
+        .modal.open {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -79,7 +90,7 @@
         </div>
         
         <div class="container mx-auto px-4 text-center relative z-10">
-            <span class="inline-block bg-yellow text-dark-teal px-4 py-1 rounded-full text-sm font-bold mb-4 uppercase tracking-wider">Family Math Night</span>
+            <!-- Removed the "Family Math Night" span -->
             <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Nurturing Number Sense<br><span class="text-turquoise">Through Play & Routine</span></h1>
             <p class="text-xl max-w-2xl mx-auto text-gray-200">
                 Play and daily routines nurture a child’s natural desire to describe the math all around them. Discover why it matters and how to start.
@@ -263,9 +274,11 @@
                 </div>
             </div>
 
-            <button class="mt-8 bg-coral hover:bg-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 relative z-10">
-                RSVP Now
-            </button>
+            <!-- RSVP Button updated with the provided Google Form link -->
+            <a href="https://forms.gle/SWRuYif2UkWf7j9CA" target="_blank" class="inline-block mt-8 bg-coral hover:bg-red-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 relative z-10">
+                RSVP Now 📝
+            </a>
+            <p class="text-sm mt-2 text-gray-300 relative z-10">Click to register via Google Form</p>
         </div>
 
     </main>
@@ -276,17 +289,17 @@
         <p class="mt-2">Created for Pre-K & Kindergarten Families.</p>
     </footer>
 
+
     <!-- Script Section -->
-    <script>
-        // Palette Colors
+    <script type="module">
+        
+        // --- Chart/LLM Scripts ---
+        // Palette Colors (Redefined for scope)
         const coral = '#FF6B6B';
         const turquoise = '#4ECDC4';
         const yellow = '#FFE66D';
         const darkTeal = '#1A535C';
-        const lightGray = '#f3f4f6';
-
-        // --- Chart.js Configuration & Helpers ---
-
+        
         // Helper: Label Wrapping Logic (Mandatory > 16 chars split)
         function wrapLabel(label) {
             if (typeof label !== 'string') return label;
@@ -391,7 +404,7 @@
             data: {
                 labels: labelsGap,
                 datasets: [{
-                    data: [85, 15], // Typical disparity statistics
+                    data: [85, 15],
                     backgroundColor: [turquoise, yellow],
                     borderWidth: 0,
                     hoverOffset: 4
@@ -426,7 +439,7 @@
                     label: 'Target Proficiency',
                     data: [90, 85, 80, 70, 75],
                     fill: true,
-                    backgroundColor: 'rgba(255, 107, 107, 0.2)', // Coral transparent
+                    backgroundColor: 'rgba(255, 107, 107, 0.2)',
                     borderColor: coral,
                     pointBackgroundColor: coral,
                     pointBorderColor: '#fff',
@@ -457,13 +470,10 @@
         });
 
         // --- Chart 4: Developmental Trajectory (Plotly.js) ---
-        // Using Canvas rendering via 'scattergl' or config if possible, but basic scatter usually svg/canvas hybrid.
-        // We will configure it to look clean and match the palette.
-        
         const plotlyData = [
             {
-                x: [3, 4, 5, 6], // Age
-                y: [2, 5, 12, 25], // Vocabulary count related to math (simulated)
+                x: [3, 4, 5, 6],
+                y: [2, 5, 12, 25],
                 mode: 'markers+lines',
                 type: 'scatter',
                 name: 'Math Vocabulary Words',
@@ -503,7 +513,6 @@
         const plotlyConfig = {
             responsive: true,
             displayModeBar: false,
-            // Force WebGL/Canvas where applicable for performance, though scatter is standard
             renderer: 'canvas' 
         };
 
